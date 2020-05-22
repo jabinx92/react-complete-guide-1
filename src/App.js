@@ -82,7 +82,3 @@ class App extends Component {
 }
 
 export default App;
-   
-// react 5 hour       test        
-
-//hello
