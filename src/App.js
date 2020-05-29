@@ -86,7 +86,10 @@ export default App;
 //break   
 
 //=======================================================================================
-import React, {Component} from "react"
+// import React, {Component} from "react"
+
+
+
 
 /**
  * Challenge: Wire up the partially-finished travel form so that it works!
@@ -103,97 +106,81 @@ import React, {Component} from "react"
  * to play around with and learn from at https://coursework.vschool.io
  */
 
-// class App extends React.Component {
-//     constructor () {
+// class App extends Component {
+//     constructor() {
 //         super()
 //         this.state = {
 //             firstName: '',
 //             lastName: '',
 //             age: '',
 //             gender: '',
-//             destination: 'Langkawi, Thailand',
-//             isKosher: false,
-//             isVegetarian: false,
-//             isLactose: false
+//             destination: '',
+//             kosher: false,
+//             vegan: false,
+//             lactose: false
 //         }
 //     }
-    
 //     handleChange = (event) => {
 //         event.target.type === "checkbox" ? this.setState({
 //             [event.target.name] : event.target.checked
-//             }) :
-//         this.setState({ 
+//         }) : this.setState({
 //             [event.target.name] : event.target.value
 //         })
 //     }
-    
 //     handleSubmit = (event) => {
 //         alert(
-//         `First Name: ${this.state.firstName}\nLast Name: ${this.state.lastName}\nAge: ${this.state.age}\nGender: ${this.state.gender}\nLocation: ${this.state.destination}\nDietary Restrictions: ${this.state.isKosher ? 'Kosher' : ''}, ${this.state.isVegetarian ? 'Vegetarian' : ''}, ${this.state.isLactose ? 'Lactose' : ''}
+//         `First Name: ${this.state.firstName}\nLast Name: ${this.state.lastName}\nAge: ${this.state.age}\nGender: ${this.state.gender}\nLocation: ${this.state.destination}\nDietary Restrictions: ${this.state.kosher ? '-Kosher' : ''} ${this.state.vegan ? '-Vegetarian' : ''} ${this.state.lactose ? '-Lactose' : ''}
 //         `);
 //         event.preventDefault();
 //     }
     
 //     render() {
 //         return (
-//             <div>
-//                 <form onSubmit={this.handleSubmit}>
-//                 <label>
-//                     <input 
-//                         type='text'
-//                         value={this.state.firstName} 
-//                         name='firstName' 
-//                         placeholder="First Name" 
-//                         onChange={this.handleChange} 
-//                     />
-//                     <br />
-//                     <input 
-//                         type='text'
-//                         value={this.state.lastName} 
-//                         name="lastName" 
-//                         placeholder="Last Name" 
-//                         onChange={this.handleChange} 
-//                     />
-//                     <br />
-//                     <input 
-//                         type='number'
-//                         value={this.state.age} 
-//                         name='age' 
-//                         placeholder="Age" 
-//                         onChange={this.handleChange} 
-//                     />
+//             <main>
+//                 <form>
+//                     <input type='text' value={this.state.firstName} placeholder="First Name" name='firstName' onChange={this.handleChange}/><br />
+                    
+//                     <input type='text' value={this.state.lastName} placeholder="Last Name" name='lastName' onChange={this.handleChange}/><br />
+                
+//                     <input type='number' value={this.state.age} placeholder="Age" name='age' onChange={this.handleChange}/><br />
+                    
+//                     {/* Create radio buttons for gender here */}
 //                     <br />
 //                     <label>
 //                     <input 
 //                         type="radio" 
 //                         name="gender"
-//                         value="male"
-//                         checked={this.state.gender === "male"}
+//                         value="Male"
+//                         checked={this.state.gender === "Male"}
 //                         onChange={this.handleChange}
 //                     /> Male
-//                     </label>
+                    
 //                     <br />
-//                     <label>
+                    
 //                     <input 
 //                         type="radio" 
 //                         name="gender"
-//                         value="female"
-//                         checked={this.state.gender === "female"}
+//                         value="Female"
+//                         checked={this.state.gender === "Female"}
 //                         onChange={this.handleChange}
 //                     /> Female
 //                     </label>
+                    
+//                     {/* Create select box for location here */}
 //                     <br />
 //                     <select name='destination'  onChange={this.handleChange}>
-//                         <option value="Langkawi, Thailand">Langkawi, Thailand</option>
-//                         <option value="Beijing, China">Beijing, China</option>
-//                         <option value="Wellington, New Zealand">Wellington, New Zealand</option>
-//                     </select>
+// //                         <option value="Langkawi, Thailand">Langkawi, Thailand</option>
+// //                         <option value="Beijing, China">Beijing, China</option>
+// //                         <option value="Wellington, New Zealand">Wellington, New Zealand</option>
+// //                     </select>
+                    
+//                     {/* Create check boxes for dietary restrictions here */}
 //                     <br />
 //                     <label>
 //                     <input 
 //                         type="checkbox" 
-//                         name="isKosher"
-//                         checked={this.state.isKosher}
+//                         name="kosher"
+//                         checked={this.state.kosher}
 //                         onChange={this.handleChange}
 //                     /> Is kosher?
 //                     </label>
@@ -201,8 +188,8 @@ import React, {Component} from "react"
 //                     <label>
 //                     <input 
 //                         type="checkbox" 
-//                         name="isVegetarian"
-//                         checked={this.state.isVegetarian}
+//                         name="vegan"
+//                         checked={this.state.vegan}
 //                         onChange={this.handleChange}
 //                     /> Is vegetarian?
 //                     </label>
@@ -210,21 +197,31 @@ import React, {Component} from "react"
 //                     <label>
 //                     <input 
 //                         type="checkbox" 
-//                         name="isLactose"
-//                         checked={this.state.isLactose}
+//                         name="lactose"
+//                         checked={this.state.lactose}
 //                         onChange={this.handleChange}
 //                     /> Is lactose?
 //                     </label>
 //                      <br />
-//                     </label>
-//                     <input type="submit" value="Submit" />
-
-//                     <h1>{this.state.firstName} {this.state.lastName} {this.state.age ? this.state.age: null}</h1>
+                    
+//                     <button onClick={this.handleSubmit}>Submit</button>
 //                 </form>
-//             </div>
+//                 <hr />
+//                 <h2>Entered information:</h2>
+//                 <p>Your name: {this.state.firstName} {this.state.lastName}</p>
+//                 <p>Your age: {this.state.age}</p>
+//                 <p>Your gender: {this.state.gender}</p>
+//                 <p>Your destination: {this.state.destination}</p>
+//                 <p>
+//                     Your dietary restrictions: 
+//                     {/* Dietary restrictions here, comma separated */}
+//                     {this.state.kosher?'Kosher':''} {this.state.vegan?'Vegan':''}    {this.state.lactose?'Lactose':''}
+//                 </p>
+//             </main>
 //         )
 //     }
 // }
 
 // export default App
-//start
+// //===============================================================================
+
