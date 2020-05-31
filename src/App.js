@@ -86,7 +86,7 @@ export default App;
 //break   
 
 //=======================================================================================
-// import React, {Component} from "react"
+import React, {Component} from "react"
 
 
 
@@ -106,122 +106,123 @@ export default App;
  * to play around with and learn from at https://coursework.vschool.io
  */
 
-// class App extends Component {
-//     constructor() {
-//         super()
-//         this.state = {
-//             firstName: '',
-//             lastName: '',
-//             age: '',
-//             gender: '',
-//             destination: '',
-//             kosher: false,
-//             vegan: false,
-//             lactose: false
-//         }
-//     }
-//     handleChange = (event) => {
-//         event.target.type === "checkbox" ? this.setState({
-//             [event.target.name] : event.target.checked
-//         }) : this.setState({
-//             [event.target.name] : event.target.value
-//         })
-//     }
-//     handleSubmit = (event) => {
-//         alert(
-//         `First Name: ${this.state.firstName}\nLast Name: ${this.state.lastName}\nAge: ${this.state.age}\nGender: ${this.state.gender}\nLocation: ${this.state.destination}\nDietary Restrictions: ${this.state.kosher ? '-Kosher' : ''} ${this.state.vegan ? '-Vegetarian' : ''} ${this.state.lactose ? '-Lactose' : ''}
-//         `);
-//         event.preventDefault();
-//     }
+class App extends Component {
+    constructor() {
+        super()
+        this.state = {
+            firstName: '',
+            lastName: '',
+            age: '',
+            gender: '',
+            destination: '',
+            dietaryRestrictions: {
+              vegan: false,
+              kosher: false,
+              lactose: false
+            }
+        }
+    }
+    handleChange = (event) => {
+        event.target.type === "checkbox" ? this.setState({
+            [event.target.name] : event.target.checked
+        }) : this.setState({
+            [event.target.name] : event.target.value
+        })
+    }
+    handleSubmit = (event) => {
+        alert(
+        `First Name: ${this.state.firstName}\nLast Name: ${this.state.lastName}\nAge: ${this.state.age}\nGender: ${this.state.gender}\nLocation: ${this.state.destination}\nDietary Restrictions: ${this.state.kosher ? '-Kosher' : ''} ${this.state.vegan ? '-Vegetarian' : ''} ${this.state.lactose ? '-Lactose' : ''}
+        `);
+        event.preventDefault();
+    }
     
-//     render() {
-//         return (
-//             <main>
-//                 <form>
-//                     <input type='text' value={this.state.firstName} placeholder="First Name" name='firstName' onChange={this.handleChange}/><br />
+    render() {
+        return (
+            <main>
+                <form>
+                    <input type='text' value={this.state.firstName} placeholder="First Name" name='firstName' onChange={this.handleChange}/><br />
                     
-//                     <input type='text' value={this.state.lastName} placeholder="Last Name" name='lastName' onChange={this.handleChange}/><br />
+                    <input type='text' value={this.state.lastName} placeholder="Last Name" name='lastName' onChange={this.handleChange}/><br />
                 
-//                     <input type='number' value={this.state.age} placeholder="Age" name='age' onChange={this.handleChange}/><br />
+                    <input type='number' value={this.state.age} placeholder="Age" name='age' onChange={this.handleChange}/><br />
                     
-//                     {/* Create radio buttons for gender here */}
-//                     <br />
-//                     <label>
-//                     <input 
-//                         type="radio" 
-//                         name="gender"
-//                         value="Male"
-//                         checked={this.state.gender === "Male"}
-//                         onChange={this.handleChange}
-//                     /> Male
+                    {/* Create radio buttons for gender here */}
+                    <br />
+                    <label>
+                    <input 
+                        type="radio" 
+                        name="gender"
+                        value="Male"
+                        checked={this.state.gender === "Male"}
+                        onChange={this.handleChange}
+                    /> Male
                     
-//                     <br />
+                    <br />
                     
-//                     <input 
-//                         type="radio" 
-//                         name="gender"
-//                         value="Female"
-//                         checked={this.state.gender === "Female"}
-//                         onChange={this.handleChange}
-//                     /> Female
-//                     </label>
+                    <input 
+                        type="radio" 
+                        name="gender"
+                        value="Female"
+                        checked={this.state.gender === "Female"}
+                        onChange={this.handleChange}
+                    /> Female
+                    </label>
                     
-//                     {/* Create select box for location here */}
-//                     <br />
-//                     <select name='destination'  onChange={this.handleChange}>
-// //                         <option value="Langkawi, Thailand">Langkawi, Thailand</option>
-// //                         <option value="Beijing, China">Beijing, China</option>
-// //                         <option value="Wellington, New Zealand">Wellington, New Zealand</option>
-// //                     </select>
+                    {/* Create select box for location here */}
+                    <br />
+                    <select value={this.state.destination} name='destination'  onChange={this.handleChange}>
+                           <option value="">-- Please Choose a Destination --</option>
+                         <option value="Langkawi, Thailand">Langkawi, Thailand</option>
+                         <option value="Beijing, China">Beijing, China</option>
+                         <option value="Wellington, New Zealand">Wellington, New Zealand</option>
+                     </select>
                     
-//                     {/* Create check boxes for dietary restrictions here */}
-//                     <br />
-//                     <label>
-//                     <input 
-//                         type="checkbox" 
-//                         name="kosher"
-//                         checked={this.state.kosher}
-//                         onChange={this.handleChange}
-//                     /> Is kosher?
-//                     </label>
-//                     <br />
-//                     <label>
-//                     <input 
-//                         type="checkbox" 
-//                         name="vegan"
-//                         checked={this.state.vegan}
-//                         onChange={this.handleChange}
-//                     /> Is vegetarian?
-//                     </label>
-//                     <br />
-//                     <label>
-//                     <input 
-//                         type="checkbox" 
-//                         name="lactose"
-//                         checked={this.state.lactose}
-//                         onChange={this.handleChange}
-//                     /> Is lactose?
-//                     </label>
-//                      <br />
+                    {/* Create check boxes for dietary restrictions here */}
+                    <br />
+                    <label>
+                    <input 
+                        type="checkbox" 
+                        name="kosher"
+                        checked={this.state.dietaryRestrictions.kosher}
+                        onChange={this.handleChange}
+                    /> Is kosher?
+                    </label>
+                    <br />
+                    <label>
+                    <input 
+                        type="checkbox" 
+                        name="vegan"
+                        checked={this.state.dietaryRestrictions.vegan}
+                        onChange={this.handleChange}
+                    /> Is vegetarian?
+                    </label>
+                    <br />
+                    <label>
+                    <input 
+                        type="checkbox" 
+                        name="lactose"
+                        checked={this.state.dietaryRestrictions.lactose}
+                        onChange={this.handleChange}
+                    /> Is lactose?
+                    </label>
+                     <br />
                     
-//                     <button onClick={this.handleSubmit}>Submit</button>
-//                 </form>
-//                 <hr />
-//                 <h2>Entered information:</h2>
-//                 <p>Your name: {this.state.firstName} {this.state.lastName}</p>
-//                 <p>Your age: {this.state.age}</p>
-//                 <p>Your gender: {this.state.gender}</p>
-//                 <p>Your destination: {this.state.destination}</p>
-//                 <p>
-//                     Your dietary restrictions: 
-//                     {/* Dietary restrictions here, comma separated */}
-//                     {this.state.kosher?'Kosher':''} {this.state.vegan?'Vegan':''}    {this.state.lactose?'Lactose':''}
-//                 </p>
-//             </main>
-//         )
-//     }
-// }
+                    <button onClick={this.handleSubmit}>Submit</button>
+                </form>
+                <hr />
+                <h2>Entered information:</h2>
+                <p>Your name: {this.state.firstName} {this.state.lastName}</p>
+                <p>Your age: {this.state.age}</p>
+                <p>Your gender: {this.state.gender}</p>
+                <p>Your destination: {this.state.destination}</p>
+                <p>
+                    Your dietary restrictions: 
+                    {/* Dietary restrictions here, comma separated */}
+                    {this.state.kosher?'Kosher':''} {this.state.vegan?'Vegan':''}    {this.state.lactose?'Lactose':''}
+                </p>
+            </main>
+        )
+    }
+}
 
-// export default App
-// //===============================================================================
-
+export default App // test
