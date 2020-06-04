@@ -9,4 +9,4 @@ return (
 )
 }
 
-export default person
+export default person  
