@@ -1,5 +1,7 @@
 //"npm start" on terminal to start this application on a local host
 
+
+//this is a class based component example with state ==========================
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
@@ -15,7 +17,7 @@ class App extends Component {
   }
 
   switchNameHandler = (newName) => {
-    // console.log('Was clicked!');
+    console.log('Was clicked!');
     // DON'T DO THIS: this.state.persons[0].name = 'Maximilian';
     this.setState( {
       persons: [
@@ -59,25 +61,133 @@ class App extends Component {
   }
 
   render () {
+    const style = { //in line styling instead of going into app.css
+      backgroundColor: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+    };
+
+    const style2 = {
+      backgroundColor: 'black',
+      font:'white',
+      border: '2x solid blue',
+      padding: '10x'
+    }
+
     return (
       <div className="App">
         <h1>Hi, I'm a React App</h1>
         <p>I'm really working!</p>
-        <Person name="Max" age="28"/>
-        <Person name="Manu" age="29">My Hobbies: Racing</Person>
-        <Person name="Stephanie" age="31"/>
+        <button
+        style={style} //example of inclass styling with line 64 const style
+        onClick={() => this.switchNameHandler('hhh')}>Switch Name</button>
+        <Person 
+        name={this.state.persons[0].name} 
+        age={this.state.persons[0].age}/>
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        click={this.switchNameHandler.bind(this,'MAX!')}
+        changed={this.nameChangedHandler}>My Hobbies: Racing</Person>
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
       </div>
       
-    );
-    // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
+      );
+      // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
+    }
   }
-}
 
 export default App;
 
-//break   
+//this is a function based component example  with =============================================
 
-//=======================================================================================
+// import React, { useState } from 'react';
+// import './App.css';
+// import Person from './Person/Person';
+
+// const App = props => {
+//   const [personsState, setPersonsState] = useState({
+//       persons: [
+//         { name: 'Max', age: 28 },
+//         { name: 'Manu', age: 29 },
+//         { name: 'Stephanie', age: 26 }
+//       ]
+//     });
+
+//     const [otherState, setOtherState] = useState('some other value');// you can have as many useState functions as you want
+
+//     console.log(personsState, otherState)
+
+//   const switchNameHandler = (newName) => {
+//     setPersonsState( {
+//       persons: [
+//         { name: 'Maximo', age: 28 },
+//         { name: 'Manu', age: 29 },
+//         { name: 'Stephanie', age: 27 }
+//       ],
+//       otherState: otherState
+//     } )
+//   }
+
+//   const nameChangedHandler = (event) => {
+//     this.setState( {
+//       persons: [
+//         { name: 'Max', age: 28 },
+//         { name: event.target.value, age: 29 },
+//         { name: 'Stephanie', age: 26 }
+//       ]
+//     } )
+//   }
+
+//   const makeMeYounger = () => {
+//     const newState = this.state.persons.forEach((user) => {
+//       const tempUser = user;
+//       tempUser.age += 10;
+//       return tempUser;
+//     });
+//     this.setState({
+//       newState
+//     });
+//   }
+
+//   const changeMyName = () => {
+//     const changedName = this.state.persons.forEach((username) => {
+//       let tempUser = username;
+//       username.name = 'error'
+//       return tempUser;
+//     });
+//     this.setState({
+//       changedName
+//     })
+//   }
+
+  
+//     return (
+//       <div className="App">
+//         <h1>Hi, I'm a React App</h1>
+//         <p>I'm really working!</p>
+//         <button onClick={switchNameHandler}>Switch Name</button>
+//         <Person name={personsState.persons[0].name} age={personsState.persons[0].age}/>
+//         <Person name={personsState.persons[1].name} age={personsState.persons[1].age}>My Hobbies: Racing</Person>
+//         <Person name={personsState.persons[2].name} age={personsState.persons[2].age}/>
+//       </div>
+      
+//     );
+//     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
+//   }
+
+// export default App;
+
+// the goal is to have an application that uses more stateless components than stateful components. WHY? makes app easier to maintain and manager, clear flow of data and clear logic setting
+
+// dont get sphagetti code where everyone is doing their own thing, it gets confusing.
+//terms to keep in mind, container, stateful, stateless, smart component,dumb component
+
+//========================================================================
 // import React, {Component} from "react"
 
 
