@@ -87,11 +87,10 @@ class App extends Component {
     })
   }
 
-  countLength = (event) => {
+  inputChangeHandler = (event) => {
     event.preventDefault();
-    const prev = event.target.value
     this.setState({
-      input: prev
+      input: event.target.value
     })
   }
 
@@ -129,21 +128,18 @@ class App extends Component {
       )
     }
 
-    let letters = null;
 
-    if(this.state.input.length) {
-      let joined = this.state.input.split('')
-      letters = (
-        joined.map((letter, index) => {
-          return <CharComponent 
+    
+    let joined = this.state.input.split('').map((letter, index) => {
+        return <CharComponent 
           letter={letter}
           click={() => this.deleteLetterHandler(index)}
           input={this.state.input}
           key={index}
-          />
-        })
-      )
-    }
+        />
+    })
+      
+    
 
 
     return (
@@ -157,10 +153,11 @@ class App extends Component {
         <form>
           <label>
             Type something:
-            <input type="text" name="name" onChange={this.countLength}/>
-            <div>{this.state.input}</div>
+            <input type="text" value={this.state.input} onChange={this.inputChangeHandler}/>
           </label>
         </form>
+        <br></br>
+        <div>{this.state.input}</div>
 
         <p>{this.state.input.length ? 'The input length is: ' + this.state.input.length: null}
         </p>
@@ -169,9 +166,9 @@ class App extends Component {
         {this.state.input.length ? <ValidationComponent count={this.state.input.length}/> : null}
         </div>
 
-        {letters}
+        {joined}
 
-
+        <br></br>
         <button style={style} //example of inclass styling with line 64 const style
         onClick={this.togglePersonHandler}>Toggle Persons</button>
 
