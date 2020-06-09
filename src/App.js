@@ -8,6 +8,7 @@ import Person from './Person/Person';
 
 class App extends Component {
   state = {
+    length: 0,
     input: "",
     persons: [
       { id: 'aawd', name: 'Max', age: 28 },
@@ -76,11 +77,19 @@ class App extends Component {
   }
 
   countLength = (event) => {
-    console.log(event)
     event.preventDefault();
     const prev = event.target.value
     this.setState({
       input: prev
+    })
+  }
+
+  counted = (event) => {
+    event.preventDefault();
+    const count = this.state.input.length
+
+    this.setState({
+      length : count
     })
   }
 
@@ -130,9 +139,8 @@ class App extends Component {
           <input type="submit" value="Submit"/>
         </form>
 
-        <p>{this.state.input.length ? 'The input length is: ' + this.state.input.length: null}
+        <p>{this.state.length ? 'The input length is: ' + this.state.length: null}
         </p>
-        
 
         <button style={style} //example of inclass styling with line 64 const style
         onClick={this.togglePersonHandler}>Toggle Persons</button>
@@ -145,7 +153,7 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App;   
 
 //this is a function based component example  with =============================================
 
