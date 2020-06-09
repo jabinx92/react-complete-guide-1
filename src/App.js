@@ -8,34 +8,31 @@ import Person from './Person/Person';
 
 class App extends Component {
   state = {
+    input: "",
     persons: [
-      { name: 'Max', age: 28 },
-      { name: 'Manu', age: 29 },
-      { name: 'Stephanie', age: 26 }
+      { id: 'aawd', name: 'Max', age: 28 },
+      { id: 'bfev', name: 'Manu', age: 29 },
+      { id: 'cawd', name: 'Stephanie', age: 26 }
     ],
-    otherState: 'some other value'
+    otherState: 'some other value',
+    showPersons: false
   }
 
-  switchNameHandler = (newName) => {
-    console.log('Was clicked!');
-    // DON'T DO THIS: this.state.persons[0].name = 'Maximilian';
-    this.setState( {
-      persons: [
-        { name: newName, age: 28 },
-        { name: 'Manu', age: 29 },
-        { name: 'Stephanie', age: 27 }
-      ]
-    } )
-  }
+  nameChangedHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(person => {
+      return person.id === id;
+    });
 
-  nameChangedHandler = (event) => {
-    this.setState( {
-      persons: [
-        { name: 'Max', age: 28 },
-        { name: event.target.value, age: 29 },
-        { name: 'Stephanie', age: 26 }
-      ]
-    } )
+    const person = {
+      ...this.state.persons[personIndex]
+    };
+
+    person.name = event.target.value;
+    
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
+    this.setState( {persons: persons} );
   }
 
   makeMeYounger = () => {
@@ -60,6 +57,33 @@ class App extends Component {
     })
   }
 
+  deletePersonHandler = (personIndex) => {
+    
+    // const persons = this.state.persons.slice()
+    const persons = [...this.state.persons];
+
+    //always try to update state in a unmutated version, not doing so can cause problems. Above are 2 examples where state is saved in a new array, first const persons is sliced, creating a new array for the state. second const  is used with the ... spread operator into a new array, either way works.
+
+    persons.splice(personIndex, 1); 
+    this.setState({persons: persons})
+  }
+
+  togglePersonHandler = () => {
+    const doesShow = this.state.doesShow;
+    this.setState({
+      showPersons: !doesShow
+    })
+  }
+
+  countLength = (event) => {
+    console.log(event)
+    event.preventDefault();
+    const prev = event.target.value
+    this.setState({
+      input: prev
+    })
+  }
+
   render () {
     const style = { //in line styling instead of going into app.css
       backgroundColor: 'white',
@@ -69,37 +93,57 @@ class App extends Component {
       cursor: 'pointer'
     };
 
-    const style2 = {
-      backgroundColor: 'black',
-      font:'white',
-      border: '2x solid blue',
-      padding: '10x'
+    let persons = null;
+
+    if(this.state.showPersons) {
+      persons = (
+        this.state.persons.map((person, index) => {
+          return <Person 
+          click={() => this.deletePersonHandler(index)}
+          name={person.name}
+          age={person.age}
+          key={person.id}
+          changed={(event) => {this.nameChangedHandler(event, person.id)}}
+          />
+        })
+      )
     }
+
 
     return (
       <div className="App">
-        <h1>Hi, I'm a React App</h1>
-        <p>I'm really working!</p>
-        <button
-        style={style} //example of inclass styling with line 64 const style
-        onClick={() => this.switchNameHandler('hhh')}>Switch Name</button>
-        <Person 
-        name={this.state.persons[0].name} 
-        age={this.state.persons[0].age}/>
-        <Person 
-        name={this.state.persons[1].name} 
-        age={this.state.persons[1].age}
-        click={this.switchNameHandler.bind(this,'MAX!')}
-        changed={this.nameChangedHandler}>My Hobbies: Racing</Person>
-        <Person 
-        name={this.state.persons[2].name} 
-        age={this.state.persons[2].age}/>
+        <ol>
+          <li>Create an input field (in App component) with a change listener which outputs the length of the entered text below it (e.g. in a paragraph).</li>
+          <li>Create a new component (=> ValidationComponent) which receives the text length as a prop</li>
+          <li>Inside the ValidationComponent, either output "Text too short" or "Text long enough" depending on the text length (e.g. take 5 as a minimum length)</li>
+          <li>Create another component (=> CharComponent) and style it as an inline box (=> display: inline-block, padding: 16px, text-align: center, margin: 16px, border: 1px solid black).</li>
+          <li>Render a list of CharComponents where each CharComponent receives a different letter of the entered text (in the initial input field) as a prop.</li>
+          <li>When you click a CharComponent, it should be removed from the entered text.</li>
+        </ol>
+        <p>Hint: Keep in mind that JavaScript strings are basically arrays!</p>
+
+        <form onSubmit={this.counted}>
+          <label>
+            Type something:
+            <input type="text" name="name" onChange={this.countLength}/>
+          </label>
+          <input type="submit" value="Submit"/>
+        </form>
+
+        <p>{this.state.input.length ? 'The input length is: ' + this.state.input.length: null}
+        </p>
+        
+
+        <button style={style} //example of inclass styling with line 64 const style
+        onClick={this.togglePersonHandler}>Toggle Persons</button>
+
+        {persons}
       </div>
       
-      );
       // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
-    }
+    );
   }
+}
 
 export default App;
 
@@ -327,4 +371,4 @@ export default App;
 //     }
 // }
 
-// export default App
+// export default App   

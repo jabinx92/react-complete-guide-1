@@ -1,5 +1,5 @@
 import React from "react";
-import './Person.css'
+import './Person.css';
 
 const person = (props) => {
     return (
@@ -11,4 +11,4 @@ const person = (props) => {
     )
 }
 
-export default person  
+export default person
