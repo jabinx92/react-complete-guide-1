@@ -3,24 +3,10 @@
 
 //this is a class based component example with state ==========================
 import React, { Component } from 'react';
-import styled from 'styled-components'
 import Person from './Person/Person';
 import ValidationComponent from './ValidationComponent';
 import CharComponent from './CharComponent';
-
-const StyledButton = styled.button`
-  background-color: ${prop => prop.alt ? 'red':'green'};
-  color: white;
-  font: inherit;
-  border: 1px solid blue;
-  padding: 8px;
-  cursor: pointer;
-
-  &:hover  {
-    background-color: ${prop => prop.alt ? 'salmon':'lightgreen'};
-    color: black
-  }
-  `;
+import './App.css'
 
 class App extends Component {
   state = {
@@ -198,8 +184,8 @@ class App extends Component {
 
         <br></br>
         <p className={classes.join(' ')}>This is really working!</p>
-        <StyledButton alt={this.state.showPersons}
-        onClick={this.togglePersonHandler}>Toggle Persons</StyledButton>
+        <button className="button"
+        onClick={this.togglePersonHandler}>Toggle Persons</button>
 
         {persons}
       </div>
