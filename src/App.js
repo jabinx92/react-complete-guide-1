@@ -3,10 +3,24 @@
 
 //this is a class based component example with state ==========================
 import React, { Component } from 'react';
-import './App.css';
+import styled from 'styled-components'
 import Person from './Person/Person';
-import ValidationComponent from './ValidationComponent'
-import CharComponent from './CharComponent'
+import ValidationComponent from './ValidationComponent';
+import CharComponent from './CharComponent';
+
+const StyledButton = styled.button`
+  background-color: ${prop => prop.alt ? 'red':'green'};
+  color: white;
+  font: inherit;
+  border: 1px solid blue;
+  padding: 8px;
+  cursor: pointer;
+
+  &:hover  {
+    background-color: ${prop => prop.alt ? 'salmon':'lightgreen'};
+    color: black
+  }
+  `;
 
 class App extends Component {
   state = {
@@ -104,18 +118,24 @@ class App extends Component {
   }
 
   render () {
-    const style = { //in line styling instead of going into app.css
-      backgroundColor: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer'
-    };
+    // const style = { //in line styling instead of going into app.css
+    //   backgroundColor: 'green',
+    //   color: 'white',
+    //   font: 'inherit',
+    //   border: '1px solid blue',
+    //   padding: '8px',
+    //   cursor: 'pointer',
+    //   ':hover' : {
+    //     backgroundColor: 'lightgreen',
+    //     color: 'black'
+    //   }
+    // };
 
     let persons = null;
 
     if(this.state.showPersons) {
       persons = (
+
         this.state.persons.map((person, index) => {
           return <Person 
           click={() => this.deletePersonHandler(index)}
@@ -125,7 +145,21 @@ class App extends Component {
           changed={(event) => {this.nameChangedHandler(event, person.id)}}
           />
         })
-      )
+      );
+      // style.backgroundColor = 'red';
+      // style[':hover'] = {
+      //   backgroundColor: 'salmon',
+      //   color:'black'
+      // }
+    }
+
+    const classes = [];
+    if(this.state.persons.length <= 2) {
+      classes.push('red'); //classes = ['red']
+    }
+
+    if(this.state.persons.length <= 1) {
+      classes.push('bold'); //classes = ['red','bold']
     }
 
 
@@ -163,8 +197,9 @@ class App extends Component {
         {joined}
 
         <br></br>
-        <button style={style} //example of inclass styling with line 64 const style
-        onClick={this.togglePersonHandler}>Toggle Persons</button>
+        <p className={classes.join(' ')}>This is really working!</p>
+        <StyledButton alt={this.state.showPersons}
+        onClick={this.togglePersonHandler}>Toggle Persons</StyledButton>
 
         {persons}
       </div>
