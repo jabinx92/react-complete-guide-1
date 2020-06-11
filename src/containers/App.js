@@ -3,11 +3,14 @@
 
 //this is a class based component example with state ==========================
 import React, { Component } from 'react';
-import Person from './Person/Person';
-import ValidationComponent from './ValidationComponent';
-import CharComponent from './CharComponent';
+import Persons from '../components/Persons/Persons';
+import ValidationComponent from '../ValidationComponent';
+import CharComponent from '../CharComponent';
 import classes from './App.css'
+import Cockpit from '../components/Cockpit/Cockpit';
 
+
+console.log('app.js')
 class App extends Component {
   state = {
     input: "",
@@ -23,7 +26,7 @@ class App extends Component {
 
   nameChangedHandler = (event, id) => {
     const personIndex = this.state.persons.findIndex(person => {
-      return person.userId === id;
+      return person.id === id;
     });
 
     const person = {
@@ -80,7 +83,7 @@ class App extends Component {
     this.setState({input: updatedText})
   }
 
-  togglePersonHandler = () => {
+  togglePersonsHandler = () => {
     const doesShow = this.state.doesShow;
     this.setState({
       showPersons: !doesShow
@@ -106,33 +109,15 @@ class App extends Component {
   render () {
     
     let persons = null;
-    let btnClass = '';
 
     if(this.state.showPersons) {
-      persons = (
-
-        this.state.persons.map((person, index) => {
-          return <Person 
-          click={() => this.deletePersonHandler(index)}
-          name={person.name}
-          age={person.age}
-          key={person.id}
-          changed={(event) => {this.nameChangedHandler(event, person.id)}}
-          />
-        })
-      );
-      btnClass = classes.Red;
+      persons = 
+          <Persons
+            persons={this.state.persons}
+            clicked={this.deletePersonHandler}
+            changed={this.nameChangedHandler}
+            />
     }
-
-    const assignedClasses = [];
-    if(this.state.persons.length <= 2) {
-      assignedClasses.push(classes.red); //assignedClasses = ['red']
-    }
-
-    if(this.state.persons.length <= 1) {
-      assignedClasses.push(classes.bold); //assignedClasses = ['red','bold']
-    }
-
 
     
     let joined = this.state.input.split('').map((letter, index) => {
@@ -149,12 +134,14 @@ class App extends Component {
 
     return (
       <div className={classes.App}>
+        
         <form>
           <label>
             Type something:
             <input type="text" value={this.state.input} onChange={this.inputChangeHandler}/>
           </label>
         </form>
+        
         <br></br>
         <div>{this.state.input}</div>
 
@@ -168,9 +155,10 @@ class App extends Component {
         {joined}
 
         <br></br>
-        <p className={assignedClasses.join(' ')}>This is really working!</p>
-        <button className={btnClass}
-        onClick={this.togglePersonHandler}>Toggle Persons</button>
+        <Cockpit 
+        showPersons={this.state.showPersons}
+        persons={this.state.persons}
+        clicked={this.togglePersonsHandler}/>
 
         {persons}
       </div>
@@ -179,7 +167,6 @@ class App extends Component {
     );
   }
 }
-
 export default App;   
 
 //this is a function based component example  with =============================================
