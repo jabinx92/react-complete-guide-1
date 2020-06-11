@@ -10,17 +10,45 @@ import classes from './App.css'
 import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
-  state = {
-    input: "",
-    persons: [
-      { id: 'aawd', name: 'Max', age: 28 },
-      { id: 'bfev', name: 'Manu', age: 29 },
-      { id: 'cawd', name: 'Stephanie', age: 26 }
-    ],
-    otherState: 'some other value',
-    showPersons: false,
-    boxes: ""
+  constructor(props) {
+    super(props);
+    console.log('[App.js] constructor')
+    this.state = {
+      input: "",
+      persons: [
+        { id: 'aawd', name: 'Max', age: 28 },
+        { id: 'bfev', name: 'Manu', age: 29 },
+        { id: 'cawd', name: 'Stephanie', age: 26 }
+      ],
+      otherState: 'some other value',
+      showPersons: false,
+      boxes: "",
+      showCockpit: true
+    }
   }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log('[App.js] getDerivedStateFromProps', props);
+    return state;
+  }
+
+  // componentWillMount() {
+  //   console.log('[App.js] componentWillMount')
+  // }
+
+  componentDidMount = () => { //lifecycle hooks
+    console.log('[App.js] componentDidMount')
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] shouldComponentUpdate')
+    return true
+  }
+
+  componentDidUpdate () {
+    console.log('[App.js] componentDidUpdate')
+  }
+  
 
   nameChangedHandler = (event, id) => {
     const personIndex = this.state.persons.findIndex(person => {
@@ -105,6 +133,7 @@ class App extends Component {
   }
 
   render () {
+    console.log('[App.js] render')
     
     let persons = null;
 
@@ -153,10 +182,13 @@ class App extends Component {
         {joined}
 
         <br></br>
-        <Cockpit 
+        <button onClick={() => {this.setState({showCockpit: false})}}>Remove Cockpit</button>
+        {this.state.showCockpit ? (<Cockpit
+        title={this.props.appTitle} 
         showPersons={this.state.showPersons}
-        persons={this.state.persons}
+        personsLength={this.state.persons.length}
         clicked={this.togglePersonsHandler}/>
+        ) : null}
 
         {persons}
       </div>
