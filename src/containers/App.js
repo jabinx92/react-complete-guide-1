@@ -9,8 +9,6 @@ import CharComponent from '../CharComponent';
 import classes from './App.css'
 import Cockpit from '../components/Cockpit/Cockpit';
 
-
-console.log('app.js')
 class App extends Component {
   state = {
     input: "",

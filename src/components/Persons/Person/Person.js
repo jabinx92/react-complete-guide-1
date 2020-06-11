@@ -2,7 +2,7 @@ import React from "react";
 import classes from './Person.css';
 
 
-console.log('person.js')
+
 const person = (props) => {
     return (
         // <div className="Person" style={style}>

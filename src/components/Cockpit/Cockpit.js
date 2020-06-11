@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './Cockpit.css'
 
-console.log('cockpit.js')
+
 const cockpit = (props) => {
 
     const assignedClasses = [];
