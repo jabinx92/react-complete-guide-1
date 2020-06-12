@@ -8,6 +8,10 @@ import ValidationComponent from '../ValidationComponent';
 import CharComponent from '../CharComponent';
 import classes from './App.css'
 import Cockpit from '../components/Cockpit/Cockpit';
+import withClass from '../hoc/withClass'
+import Aux from '../hoc/Auxiliary'
+import AuthContext from '../context/auth-context'
+
 
 class App extends Component {
   constructor(props) {
@@ -23,9 +27,12 @@ class App extends Component {
       otherState: 'some other value',
       showPersons: false,
       boxes: "",
-      showCockpit: true
+      showCockpit: true,
+      changeCounter: 0,
+      authenticated: false
     }
   }
+  
 
   static getDerivedStateFromProps(props, state) {
     console.log('[App.js] getDerivedStateFromProps', props);
@@ -64,7 +71,12 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
-    this.setState( {persons: persons} );
+    this.setState((prevState, props) => {
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1
+      }
+    } );
   }
 
   makeMeYounger = () => {
@@ -132,8 +144,15 @@ class App extends Component {
     })
   }
 
+  loginHandler = () => {
+    this.setState({authenticated: true})
+  }
+
   render () {
     console.log('[App.js] render')
+
+    console.log(this.state.authenticated)
+
     
     let persons = null;
 
@@ -143,7 +162,9 @@ class App extends Component {
             persons={this.state.persons}
             clicked={this.deletePersonHandler}
             changed={this.nameChangedHandler}
+            isAuthenticated={this.state.authenticated}
             />
+
     }
 
     
@@ -160,8 +181,7 @@ class App extends Component {
 
 
     return (
-      <div className={classes.App}>
-        
+      <Aux>
         <form>
           <label>
             Type something:
@@ -183,21 +203,30 @@ class App extends Component {
 
         <br></br>
         <button onClick={() => {this.setState({showCockpit: false})}}>Remove Cockpit</button>
-        {this.state.showCockpit ? (<Cockpit
-        title={this.props.appTitle} 
-        showPersons={this.state.showPersons}
-        personsLength={this.state.persons.length}
-        clicked={this.togglePersonsHandler}/>
-        ) : null}
+        <AuthContext.Provider 
+          value={{
+            authenticated: this.state.authenticated,
+            login: this.loginHandler
+          }}>
 
+        {this.state.showCockpit ? (
+          <Cockpit
+          title={this.props.appTitle} 
+          showPersons={this.state.showPersons}
+          personsLength={this.state.persons.length}
+          clicked={this.togglePersonsHandler}
+          login={this.loginHandler}
+          />
+          ) : null}
         {persons}
-      </div>
+        </AuthContext.Provider>
+      </Aux>
       
       // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
     );
   }
 }
-export default App;   
+export default withClass(App, classes.App);   
 
 //this is a function based component example  with =============================================
 
