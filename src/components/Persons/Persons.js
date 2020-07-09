@@ -12,8 +12,6 @@ class Persons extends PureComponent {
     //     return state;
     // }
 
- 
-
     // shouldComponentUpdate(nextProps, nextState) {
     //     console.log('[Persons.js] shouldComponentUpdate');
     //     if(
@@ -65,4 +63,4 @@ class Persons extends PureComponent {
 export default Persons; 
 
 
-//start   finish start    
+//start   
